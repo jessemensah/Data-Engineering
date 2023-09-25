@@ -1,0 +1,189 @@
+SCRIPT - REWORD THE SCRIPT 
+POWER BI MODELLING
+
+INTRODUCTORY 
+Hello Welcome to Mensalytics
+This introductory video is a part one of two part series of data modelling in POWER BI.
+
+IN THIS VIDEO WE WILL BE DISCUSSING 
+1. WHAT MODELLING IS IN POWER BI 
+2. RDBMS VS POWER BI 
+3. CONCEPTS OF DATA MODELLING 
+4. RELATIONSHIPS 
+5. PERFORMANCE & CONSIDERATIONS WHEN MODELLING DATA IN POWER BI  
+
+
+STOP 
+
+Now lets get into it
+
+PART 1 
+WHAT IS DATA MODELLING IN POWER BI ??
+Data Modelling is the process of organising data from different sources in POWER BI.
+This serves as the bone for interactive dashboards and reports for stakeholders.
+It involves defining and creating relationships between tables using models like starschema, snowflake etc.
+Star Schema is a popular option in industry and recommended by Microsoft. 
+When modelling data in POWER BI, You must build a data model that can address all business related queries.
+This task can be complex when dealing with data from diverse sources with vary levels of granularity.
+
+PART 2 
+BEFORE WE MOVE ON
+
+I WANT US TO LOOK AT HOW POWER BI IS DIFFERENT FROM CONVENTIONAL DATABASE MANAGEMENT SYSTEM
+DATA MODELLING IN POWER BI DIFFERS FROM traditional database management system
+
+Lets take 
+Relational Database Management System
+In RDBMS, data tables are defined with fixed number of columns
+each assigned a data type ie Integer, text etc
+This allows RDBMS to calculate storage requirements per row and number of rows per data file
+this makes it well suited for transactional apps like Web shop sales.
+Indexing in RDBMS enables quick record retrieval making transaction processing efficient.
+Tables can be linked through relationships.
+Retrieving data usually involves reading entire rows.
+Furthermore aggregating data from multiple rows can be really slow.
+
+PART 3 
+POWER BI (power bi logo)
+The Power BI data model flips the RDBMS concept by storing data per column rather than per row. This approach is beneficial for
+analytical solutions where only a few columns need to be read, but for all available rows. Additionally, many values in a single column are often identical,
+such as numerous sales transactions for a limited set of products. Columnar databases can efficiently compress data by storing a value once and tracking which rows it applies to.
+Data aggregation is highly efficient in this model. Instead of summing individual values in a column,
+the columnar database engine can multiply distinct values by their respective row counts.
+LETS TAKE AN EXAMPLE 
+FRUIT COLUMN IN A DATABASE 
+Fruit
+-----
+Apple
+Banana
+Apple
+Orange
+Banana
+
+Traditional aggregation (summing) would give you:
+
+Apple: 2
+Banana: 2
+Orange: 1
+
+BUT THE COLUMNAR DATABASE ENGINE WILL DO THE FOLLOWING 
+
+Apple (distinct value) * Number of rows with Apple (2) = Apple: 2
+Banana (distinct value) * Number of rows with Banana (2) = Banana: 2
+Orange (distinct value) * Number of rows with Orange (1) = Orange: 1
+
+So, in this case, the result is the same as traditional summing, but the method described could be more efficient, especially for very large datasets, 
+as it avoids the need to scan the entire column to sum individual values. Instead, it operates on distinct values and their counts directly.
+
+PART 4 
+THE MAIN CONCEPTS OF DATA MODELLING
+FOR THIS SECTION 
+We will be looking at Star Schema & Snowflake schema
+The central table in star schema is the Fact Tables.
+Fact tables holds all numeric data that are either aggregated or granular.
+This is things that have happened. ie sales, financial ledger, student enrollment, sales etc
+Through keys, the fact tables are related to tables that hold descriptive information relating to the fact table.
+This is called a DIMENSION.
+A dimension table keeps the descriptive information that slices and dices the data of the fact table. 
+This can also be called Filters.
+Dimension tables always relate to fact tables.
+There are however some situations where dimension tables are related to each other.
+This is called snowflaking. In this situation, relationship exists between dimension tables and you have to pass throuugh
+multiple relationships to get from one table to another.
+This however brings up some issues as more relationships will slow down the performance of the report.
+It will also bring bi directional relationship which we will talk about later in this video.
+
+PART 5 
+RELATIONSHIPS
+A simple definition of a relationship is the connection between two tables.
+Now before we delve into relationships
+lets look at keys
+An example will shine more light on the importance of keys
+Lets say we have a Customer Table and Sales table
+A customer can have multiple sales in the sales table.
+To create a relationship between these two tables
+we must link customerkey from the customer table to the customer key in the sales table
+this link enables POWER BI to understand that each row of data in the customer table can be linked to one or more related rows in the sales table.
+
+PART 6 
+RELATIONSHIP CARDINALITIES
+POWER BI relationships gives abilitey to have fields from multiple tables and filtering ability accross multiple tables in the data model.
+There are three cardinalities of relationships in relational data modeling: one to one, one to many and many to many.
+
+PART 7 
+One to one relationship
+this happens in a scenario when you have unique values in both tables per column.
+when we create a relationship between two tables using the primary keys from both tables.
+Every row in the first table is related to zero or one from the second table. Therefore, the direction of filtering in a one to one relationship in Power BI is always bidirectional.
+When we have a one to one relationship, we can potentially combine the two tables into one table unless the business case we are working on dictates otherwise
+We generally recommend avoiding one to one relationships when possible.
+
+PART 8 
+One to many or many to one relationship
+the most common cardinality, is when each row of the first table is related to many rows of the second table.
+This type of cardinality means one of the tables has unique values per each row for the relationship field
+and the other table has multiple fields
+This is used between fact and dimension tables
+
+Part 9 
+Many to many relationship
+A many to many relationship is when a row from the first table is related to many rows of data in the second table and a row of data in the second table is related to many rows in the first table.
+While in a proper star schema, all relationships between dimensions tables and fact tables are one to many, the many to many relationship is still a legitimate cardinality relationship in Power BI.
+With many to many relationships, the necessity of having a primary table in tables participating in the relationship goes away.
+
+PART 10 
+FILTER PROPAGATION BEHAVIOR
+Filter propagation is one of the most important concepts to understand when building a data model in Power BI Desktop. When we create a relationship between two tables,
+we are also filtering the data of one table by the data of another.
+Each row of data in the Product table (the 1 side of the relationship) is related to many rows of data in the Sales table (the * side of the relationship)
+
+PART 11 
+BIDIRECTIONAL RELATIONSHIPS
+Now that we understand filter propagation, we can understand what a
+bidirectional relationship means and how it affects our data model. A relationship is bidirectional when we set its Cross-filter direction to Both.
+The ability to set the direction of filtering to both directions is a nice feature since it can help solve some data visualization challenges. An excellent example is
+when we use two slicers on the report page, one showing the ProductCategory column data and the other showing the Full Name data.
+As the preceding image illustrates, when the user selects a value from the Customer Name slicer, the filter propagates from the Customer table to the Sales table via the relationship
+between them. Therefore, the relevant data is shown in the table visual. So, we can see that Aaron Campbell bought some accessories and bikes here.
+Yet, the Product Category slicer still shows all the product categories in the data model.
+The end user expects only to see Accessories and Bikes in the Product Category slicer. One way to solve this issue is to set the relationship
+between the Sales table and the Product table to bidirectional by setting the relationship’s Cross-filter direction to Both.
+Now, if the user selects a value from the Product Category slicer, the filter will propagate via the current relationship from the Product table to the Sales table. However,
+it will not propagate from the Sales table to the Customer table via the current relationship since the relationship between the Sales table and the Customer table is not bidirectional.
+
+
+PART 12 
+MEMORY PERFORMANCE AND CONSIDERATIONS
+
+1. Having fewer columns is better. The Power BI model achieves a high compression rate of data due to the columnar database concept. However,
+it still needs to keep track of which values belong together in a row. The more columns a table has, the more overhead the model needs to
+know what goes where. So, keep the number of columns per table as small as possible. What we see a lot of people do is just load all columns
+of a source table into the Power BI model, out of convenience (or laziness, you could say). Take into account that it's easier to add a column
+when you need it than to find out which columns aren't being used and remove them later on. A model never shrinks organically!
+
+2. Use the right data types. Internally, the Power BI model optimizes data storage at the level of bits. All optimizations of the columnar database are based on this.
+It means that any data type that is not a whole number has to be treated differently using a dictionary of values. This doesn't mean that only the Whole Number data
+type is efficient to use; multiple data types are treated as whole numbers internally, like Date, Fixed Decimal Number, and True/False.The data type consideration
+also applies to relationships, so use one of the whole number types for relationships when possible.
+
+3. Having many rows is no issue, but watch out for many values. Again, due to the columnar database concept, the Power BI model can store a lot of rows efficiently. #
+It will determine the most optimal way to store the values in a column, but more distinct values need more space. The number of unique values in a column is by far the
+most important thing to keep an eye on! Often, an obvious way to save memory is to remove unique keys in fact tables. Many transactional systems provide a unique
+identifier for each transaction and, when loaded, these are among the most "expensive" columns in a Power BI model. We have had cases where simply removing one unique
+column from the largest fact table reduced the size of the model by over 90%!
+
+4. Avoid outliers. In many source systems, developers use special values for denoting the planned absence of real data, or other reasons.
+The special values are often outliers to ensure they are not confused with real data; like "December 31, 9999". These outliers can
+cause the Power BI model to store a column using a dictionary as with the less efficient data types, even if the values themselves are whole number values.
+This is because when storing values as whole numbers, the model has to account for all possible values between the smallest and the largest value in the column,
+and it may be more efficient to go for a dictionary instead.To avoid this, leave these values blank or choose a special value that is close to the actual values.
+
+5. Do you really need all that history? An obvious way to have a smaller model is to load less data. We have encountered many cases in which a source system keeps a long history of data.
+This is especially true when using a data warehouse as a data source for the Power BI model. You may load sales transactions from the year 2000 onward, but ask yourself:
+who is going to analyze the sales data from before 2010 or 2015? It may be better to have a separate model for the few archeologists who want to carve out wisdom from the
+past, and have a richer, more elaborate model for daily use containing only a few years of history.
+
+6. In some cases: split columns. In extreme situations, it may be useful to split columns to end up with two columns, each having fewer distinct values.
+This could happen with composite keys, for example, a product code consisting of a category code and a sequence number: "A82.019". Separate category code
+and sequence number columns would have far fewer distinct values each and may be stored more efficiently. This approach has obvious drawbacks in more complex
+handling and, also, the composite column may be needed for a relationship; so only do this when you really, really need it.

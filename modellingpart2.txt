@@ -1,0 +1,125 @@
+This is the second video for modelling part 2
+
+In this final video on data modelling we will be going through 
+1. Cross Filter options when choosing a cardinality type 
+2. Some practical examples of data modelling 
+We will look at 
+1. Football 
+2. Hotel booking system(AIRBNB OR HOTEL)
+
+
+
+Lets begin with Cross Filter options 
+1. One to Many or Many to one relationship 
+In the last video we said this is when one row in the first table is related to many rows in the second table. 
+Now the cross filter direction can be Single or Both here 
+let us consider both tables below 
+
+Provide a screen shot or design of a two tables for one to many relationship with cross filter direction of both or single. 
+
+2. One to one relationship 
+this happens in a scenario when you have unique values in both tables per column.
+Now the filter direction can be single or both 
+Provide an image or design of two tables for one to one relationship 
+
+
+3. Many to Many relationship 
+This happens when many rows in the first table is related to many rows in the second table. 
+Provide an image or design of the two tables for the many to many relationship 
+
+
+
+Real world examples 
+
+1. Lets take a couple of football legends 
+1. Drogba 
+2. Lampard 
+3. Kolo Toure 
+4. Yaya toure 
+
+These three players have played for more than two teams 
+Let us list some teams including the teams they have played for 
+Teams 
+1. Liverpool 
+2. Aston Villa 
+3. Chelsea 
+4. Westham 
+5. Barcelona 
+6. Real Madrid 
+7. Mancity 
+8. Marseille 
+
+
+What will be the best modelling scenario for this ?? 
+Create a player Table 
+Create a Team table 
+Then create a bridge table between  players and teams 
+This table contains Player ID AND Team ID 
+Now populate this table with the player team combinations 
+
+Then we create a many to many relationship between Player and Team table via the bridge table 
+
+
+2. Hotel Booking system 
+a blog by https://medium.com/towards-data-engineering/data-modelling-design-a-data-model-for-a-hotel-booking-system-like-airbnb-2110a6d079c6
+lays it well but in summary 
+Using STAR SCHEMA to model this will be 
+
+Hotel Dimension 
+1.Hotel ID
+2.Title
+3.Location
+4.Type
+
+Guest Dimension 
+1.Guest ID
+2.Name
+3.Email
+4.Phone Number
+
+Booking Dimension 
+1.Booking ID
+2.User ID
+3.Property ID
+4.Check-in Date
+5.Check-out Date
+6.Number of Guests
+
+Payment Dimension 
+1. Payment ID
+2. Booking ID
+3. Payment Date
+4. Amount
+
+Review Dimension 
+1. Review ID
+2. User ID
+3. Property ID
+4. Rating
+
+
+Fact Tables will be 
+User Fact Table 
+- Number of Bookings made by the Guest
+- Total amount spent by the User on Bookings
+Hotel Fact Table 
+- Number of Bookings made for the Property
+- Total amount earned from Bookings for the Property
+- The average rating for the Property
+3. Booking Fact 
+- The total price of the Booking
+- Number of Nights booked
+- Booking Status
+
+4. Payment Fact 
+- Amount of payment made for the Booking
+- Payment Status
+
+5. Review Fact 
+- Rating given in the review
+
+There is not a one size fit all for star schema 
+before you begin modelling you need to study the data 
+and define the question you want the data to answer before 
+you begin modelling. 
+

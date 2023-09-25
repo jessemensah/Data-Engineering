@@ -1,0 +1,34 @@
+NUMPY 
+Hello guys welcome to Computing with Numpy 
+
+In this 20 minute video 
+we will be diving into Numpy, 
+a very important library that has revolutionised numerical computing. 
+This library has incredible features that is crucial for anyone working with Data in Python. 
+
+Numpy is short for numerical python, which is a library that provides support for 
+large, multi-dimensional arrays and matrices, along with an extensive collection 
+of high-level mathematical functions to operate on these arrays. 
+It was created to address the limitations of Python when it came to handling numerical operations efficiently.
+
+The importance of numpy should be highlighted 
+1. Efficient Array Operations, 
+Array is a data structure that stores a collection of elements that are identified as an index. 
+Arrays are used to hold and organise data in a way that makes it easy to access, modify and manipulate 
+individual elements or groups of elements. 
+Numpy core feature is its ability to handle arrays efficiently. 
+2. Math functions 
+Numpy has an extensive library of math functions. which makes it easy to 
+perform complex calculations like linear algebra. 
+3. Integration with other libraries 
+Numpy integrates with other popular libraries like Scipy, Matplotlib etc which makes it possible to create 
+data centric tasks.
+
+Numpy has influence in the world cannot be measured 
+It is used widely in 
+1. Data Analysis, Data Science and Machine Learning 
+Numpy sits at the core of many analytical workflows 
+2. Scientific Research 
+3. Financial Analysis 
+
+

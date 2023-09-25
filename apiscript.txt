@@ -1,0 +1,53 @@
+GETTING DATA FROM A SECURE API VIA POWER QUERY 
+
+Hello and welcome to Mensalytics 
+Today we will use power query to get data from a secure API 
+There are several material online showing how to get data from an open api 
+However for a secure api there are several steps 
+The script below will be broken down and can be used as a template to get data from a secure API. 
+
+
+let    
+    // Define the API URL -- this is the URL in the documentation  
+    baseUrl = "https://integrations.ecoonline.net/Record/Query",
+ 
+    // Define API key    
+    apiKey = "5RMfAiXAcbkExASLBS43r/o/eeVq3umzLwAupSQEW5A5GXWAPTkvfood0kvlkA7yiNsZSI2/ue/C9HXy/NLLI89VxWNfHrBYyGKfjWL7xzPcavyDaa6P77i6i9bJDB8i
+    +RjWgqatoPfFTtoHM8vU9PmwSQ5I5Ym+i2OpB89jXBnWJCqRzQcuLFU8k0x+53/a+bnSbmPMqbzAgD0uW1WNe1nCRsU4iqiQzpZBNsfk6N4oSmSbGg0jQAJLra9ZiSvF",
+ 
+    // Define headers - this are the headers and value to be included in the request     
+    // Query headers is metadata that provides additional information about the request or client making the request.
+    // these are piecies of information that are sent along with the request to the server 
+    headers = [ 
+        #"clientId" = "PlacesforPeople",
+        #"airsweb_apiKey" = apiKey],
+ 
+    // Define query parameters 
+    // Query parameyter 
+    // Query parameters are used to pass specific information or configuration settings to web server.
+    // they are passed to the API to specify the desired order and categiry of items to retrieve 
+    queryParams = [moduleId = "AI",
+                  columns = "*", 
+                  grouprecords = "true",
+                  ResultsPerPage = "1000",
+                  Page = "1"],
+ 
+    // Construct the full API URL with query parameters 
+    // use the Uri.BuildQueryString function to construct query parameters for the URL    
+    queryUrl = baseUrl & "?" & Uri.BuildQueryString(queryParams),
+ 
+    // Send the POST request
+    // This line initiates a variable called response and assigns it the result of the Web.Contents function.
+    // Headers are typically used to send additional information with an HTTP request   
+    // Text.ToBinary("{}") converts an empty JSON object (in this case, {}) into a binary format. This is used as the payload or data that will be sent with the POST request.
+ 
+    response = Web.Contents(
+    queryUrl, [Headers=headers,Content = Text.ToBinary("{}"), 
+    ManualStatusHandling={404, 400}  
+    ]),
+ 
+    // Parse the JSON response 
+    jsonResponse = Json.Document(response), 
+    Model = jsonResponse[Model],
+    Records = Model[Records] 
+    in Records

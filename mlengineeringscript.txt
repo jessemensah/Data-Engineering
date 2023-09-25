@@ -1,0 +1,183 @@
+DATA ENGINEERING SCRIPT 
+
+Hello and welcome to Data Engineering with Mensalytics 
+We will be implementing a project based approach to data engineering 
+But in this video we will be talking about data engineering with a focus on Google Cloud Platform. 
+
+Data Lifecycle, working with data can be challenging and rewarding at the same time. 
+Understanding data lifecycle means knowing 
+1. Data Sources 
+2. Who will consume the data 
+3. Data Storage options 
+4. When should the data arrive ? 
+5. How should the data be processed ? and many more 
+
+
+PART 1 
+Data Warehousing ?? 
+Data Warehouse architecture ?? 
+The building blocks of a data warehouse ?? 
+
+
+PART 2 
+Data Lake ?? 
+Data Lake architecture ?? 
+Data lake stores unstructured data in a centralised storage. 
+
+
+PART 3 
+Difference between Data Lake and Data Warehouse ?? 
+
+
+PART 4 
+DATA LIFECYCLE 
+Data is like water and does not stay at one place. It flows upstream and downstream. 
+Data can be copied from one storage to another. Perform scenarios like join it with 
+other data, filter and split into multiple steps before data gets to consumers. 
+
+Below is a simplified flow of data from the source to end users. 
+(DESIGN THIS AND PASTE HERE) 
+
+
+PART 5 
+DATA ENGINEERING 
+Data Engineering is the process of building pipelines to facilitate the flow of data 
+from source to different destination changing the structure of the data midway. 
+
+The job of a data engineer involves the following key areas 
+1. Building Data Warehouse 
+2. Building Data Lake 
+3. Orchestrate ETL jobs 
+4. Building Data Marts 
+
+
+PART 6 
+FOUNDATIONAL CONCEPTS OF DATA ENGINEERING 
+Lets begin with what an ETL is 
+This stands for Extract, Transform and Load. 
+Extract Data from a source, Transform the data and Load to its destination. 
+
+Then there is also ELT? 
+This stands for Extract Load and Transform 
+Extract data from the source, Load the data into its destination, Transform the data inside its destination. 
+
+Now the question is which one should you use ?? 
+This depends on your system and architecture. 
+ETL is well suited for scenarios where data needs significant cleansing, standadisation or integration before it gets to its destination. 
+ELT is well suited for data being loaded rapidly and transformed in its destination when necessary. 
+It should however be noted that, Not all destination systems are powerful enough to handle transformation. 
+
+
+
+
+
+
+PART 7
+DATA ENGINEERING ON GCP 
+GCP product categories 
+1. Compute ie services like App Engine, Cloud run 
+2. Databases ie Cloud SQL, Firestore, Cloud Spanner 
+3. Storage ie Cloud Storage, Filestore 
+4. Containers ie Cloud Build, Cloud RUN 
+5. Data Analytics ie Bigquery, Dataflow, Dataproc, PUB/SUB 
+6. AI & ML ie VERTEX AI, AUTOML just to name a few 
+
+
+PART 8
+USER ACCOUNT VRS SERVICE ACCOUNT 
+User Account are intended for human users. 
+When you create a user account on GCP, its associated with the person who uses the resources. 
+ie it enables interactive access ie command line 
+resource ownership ie virtual machines, storage buckets, databases 
+etc 
+
+Service Account 
+This is intended for application on GCP. 
+They represent an application, service or system rather than a person. 
+it enables machine to machine communication. 
+Applications and services can authenticate themselves and access cloud resources programmatically without human intervention. 
+
+PART 10
+SERVICE CATEGORISATION IN GCP 
+There is a lot of services in gcp as i have mentioned a few 
+Kindly click on the link provided to view all these services and resources 
+
+
+PART 11 
+
+VM-BASED 
+VM Based service ie Compute Engine 
+No need to buy your own machine and install an operating system 
+but you will have to install softwares yourself and manage it yourself 
+Not all softwares are available in GCP and organisation that want to use specific services 
+not provided by GCP can be installed. 
+
+MANAGED SERVICES 
+This means google manages software on your behalf. 
+so no need to install OS, software dependencies and carry out maintenance. 
+But you need to configure machine size, choose the networks etc 
+an example of this is Dataproc, dataflow which we will talk about in upcoming videos. 
+
+SERVERLESS(FULLY MANAGED SERVICES) 
+Serverless service means simply use it. 
+No need to set up any software, configure anything. 
+an example is bigquery where you can just create tables and trigger sql queries instantly. 
+
+
+
+
+
+
+
+PART 12 
+GCP IDENTITY AND ACCESS MANAGEMENT 
+Identity and Access Management (IAM) in Google Cloud Platform (GCP) is a critical component of cloud security that allows you to manage and control access to your cloud resources.
+It defines who (identity) can do what (access) on which resources and under what circumstances within your GCP environment.
+It manages cloud identities using AAA model -> authentication, authorisation and auditing(accounting) 
+AUTHENTICATION 
+which involves verifying the cloud identity that is trying to access the cloud.
+
+AUTHORISATION 
+It is the process of granting or denying a user access to cloud resources once the user has been authenticated into the cloud account.
+Authorisation defines who can do what on which resource. 
+There are roles that can be assigned to users 
+Primitive(basic) roles -> Owner, editor and viewer roles 
+Predefined roles -> provide granular access to specific services following role based permission needs.(This is created and maintained by Google) 
+Custom roles -> provide granular access according to the user-specified list of permissions. These roles should be used sparingly as the user is responsible for maintaining the associated permissions.
+
+
+AUDITING 
+ is the process of keeping track of a user’s activity while accessing GCP resources, including the amount of time spent in the network, 
+ the services they’ve accessed, and the amount of data transferred during their login session. 
+
+
+
+
+
+
+
+
+
+PART 11 
+Lets create our first GCP product 
+THIS IS SUBJECT TO CHANGE(NOTE) 
+-> Open your GCP console 
+-> Top bar you will see Project Name which is () 
+-> Click on New Project 
+-> Project Name - choose a user friendly name - it doesnt have to be unique 
+-> Project ID - this needs to be globally unique. You cannot use a project ID thats already being used by other users. 
+-> click on create 
+
+
+CLOUD SHELL 
+This is like a terminal on your computer which you can use to interact with resources in GCP 
+THIS IS SUBJECT TO CHANGE 
+-> click on terminal on top right corner 
+-> wait for terminal to be ready 
+-> open editor and you get an editor to load and write your code ie VSCODE 
+-> example create a python file -> create a hello world 
+-> back to the terminal and run the file in the terminal. 
+
+
+GCP RESOURCE HIERACHY 
+PASTE AN EXAMPLE OF GCP RESOURCE HIERACHY USING A FICTIONAL BUSINESS. 
