@@ -1,5 +1,5 @@
 gcloud sql instances create mysql-database-instance  \
---database-version=MYSQL_8_0 \
+--database-version=MYSQL_5_7 \
 --tier=db-g1-small \
 --region=us-central1 \
 --root-password=jesse123 \
