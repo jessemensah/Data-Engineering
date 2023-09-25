@@ -4,4 +4,4 @@
 # DESTINATION_BUCKET_NAME="test-jess-data-bucket"
 
 # Copy the files from the "datasets" directory to the GCS bucket recursively
-gsutil cp datasets/* "gs://test-jess-data-bucket/from-git/"
+gsutil cp -r datasets/* "gs://test-jess-data-bucket/from-git/"
