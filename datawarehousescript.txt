@@ -110,5 +110,120 @@ RENTENTION POLICY ?? (FOR COMPLIANCE)
 RUN FILE sh upload_local_files_gcs.sh 
 
 3. CLONE PROJECT FROM GITHUB 
-4. UPLOAD FILE TO GCS BUCKET VIA GSUTIL 
+git clone 
 
+
+4. UPLOAD FILE TO GCS BUCKET VIA GSUTIL in file in directory 
+upload_local_files_gcs.sh
+
+
+DEVELOPING A DATA WAREHOUSE 
+
+WILL BE USING SAN FRANCISCO BIKE SHARING DATASET 
+STARTING POINT WILL BE THE REQUIREMENTS AND BUSINESS QUESTIONS 
+
+
+DATA WAREHOUSE IN BIGQUERY - REQUIREMENTS FOR SCENARIO 1 
+1. AS A REGIONAL MANAGER USER, WANTS TO KNOW TOP TWO REGION IDS 
+ORDERED BY CAPACITY IN THAT STATIONS IN THAT REGION 
+
+2. As a regional manager, I want to download the answers 
+to my questions as CSV files to my local computer.
+
+3. The data source table is the station table, which is located in the CloudSQL-MySQL database.
+
+4. There will be more data sources in the future besides the station table.
+
+
+Given the requirements 
+1. what will be done ?? 
+2. what GCP service will you use ?? 
+3. How will you do it ?? 
+
+Cloud SQL is a managed service for applications databases 
+ie MYSQL, POSTGRESQL, SQL SERVER 
+As a managed service, we do not need to worry about VM creation and software installation 
+
+
+SCENARIO 1 
+PLANNING 
+=> This will be done in SQL, BIGQUERY IS A good system for handling such jobs 
+=> Bigquery table can easily be downloaded into CSV files from the console 
+
+
+Planning 
+1. The data will be in CLOUDSQL-MYSQL database, 
+we need to find a way to extract data from mysql database and load it into bigquery 
+
+Extract and load from MYSQL to Bigquery 
+We will use GCS as staging layer from MYSQL 
+GCS => is used to handling incoming data in terms of volume, variety and velocity. 
+
+CREATE MYSQL DATABASE => EXTRACT MYSQL TO GCS => LOAD GCS TO BUGQUERY => CREATE BIGQUERY DATA MART 
+
+
+1. CREATE MYSQL DATABASE 
+- CREATE A CLOUD SQL INSTANCE 
+- CONNECT TO MYSQL INSTANCE 
+- CREATE A MYSQL DATABASE 
+- CREATE A TABLE IN MYSQL DATABASE 
+- IMPORT CSV DATA INTO THE MYSQL DATABASE 
+
+TO CREATE A CLOUD INSTANCE COPY THE CODE 
+THIS WILL CREATE A NEW MYSQL DATABASE INSTANCE
+THIS CAN THEN CONNECT TO THIS INSTANCE TO MANAGE MYSQL DATABASES AND DATA 
+-> cloudsqlinstance.sh 
+
+CONNECT TO THE MYSQL INSTANCE USING THIS COMMAND 
+gcloud sql connect mysql-database-instance --user=root 
+
+NOW LETS CREATE A DATABASE 
+- CREATE DATABASE apps_db; 
+- show database 
+
+CREATE A TABLE 
+CREATE TABLE apps_db.stations(
+station_id varchar(255),
+name varchar(255),
+region_id varchar(10),
+capacity integer
+);
+
+IMPORT CSV DATA INTO MYSQL DATABASE 
+- Tables will be used by apps and data will be inserted on user interactions with the database 
+- Load CSV files to tables using GCS. 
+- Export MYSQL table back to GCS 
+
+To import CSV data from GCS to MYSQL, We can use the CLOUDSQL console. 
+
+ACTIONS 
+CLICK ON CLOUD SQL INSTANCE 
+1. CLICK ON CREATED mysql-database-instance and then click on Import button 
+2. Choose the name of the data file in our GCS bucket 
+3. choose stations.csv 
+4. choose file format CSV 
+5. choose the destination database => apps_db 
+6. Table name => stations
+7. Now run the file 
+=> SELECT * FROM apps_db.stations LIMIT 10;
+8. TYPE exit
+
+
+
+2.EXTRACT DATA FROM MYSQL TO GCS 
+- We need to handle Identity and Access Management(IAM) 
+Need to assign CLOUDSQL service account a Storage Object Admin role first ?? what does this do ?? 
+- IAM to manage all user authentication and authorization for all services.
+Service account can be seen in MYSQL-INSTANCE 
+-> p986817296985-8yy1m2@gcp-sa-cloud-sql.iam.gserviceaccount.com
+TO ADD A NEW ROLE TO THE SERVICE ACCOUNT 
+1. GO TO NAVIGATION BAR 
+2. CHOOSE IAM & ADMIN -> IAM 
+3. CLICK GRANT ACCESS
+4. PASTE CLOUDSQL SERVICE ACCOUNT INTO NEW PRINCIPALS 
+5. THEN SELECT ROLE => Storage Object Admin (not Storage Admin)
+=> this role is to allow the service account to load data to your GCS bucket. 
+Next we want to load the data 
+
+ACCESS CLOUD SHELL AGAIN 
+TRIGGER gcloud command to export MYSQL query to a CSV file using shell script from GIT repository. 
