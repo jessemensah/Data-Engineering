@@ -227,3 +227,7 @@ Next we want to load the data
 
 ACCESS CLOUD SHELL AGAIN 
 TRIGGER gcloud command to export MYSQL query to a CSV file using shell script from GIT repository. 
+
+Now create file exportcloudsqltogcs.sh 
+once done, run file 
+-> sh exportcloudsqltogcs.sh 
